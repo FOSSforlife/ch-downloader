@@ -2,6 +2,8 @@ Downloads Clone Hero drum charts from my favorite artists.
 
 # Usage
 
+First, make sure you have the latest [Node.js](https://nodejs.dev) installed.
+
 Create an `artists.txt` file in the directory, for example (choose any bands you want, just make sure none of them include commas):
 
 ```
