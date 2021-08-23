@@ -1,7 +1,7 @@
 const { spawn } = require('child_process');
 const fs = require('fs');
 
-function sleep(ms) {
+const sleep = (ms) => {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
@@ -35,8 +35,8 @@ const sortByFolderName = (folderA, folderB) => folderA.name.toUpperCase() > fold
 
   // Get folders
   // console.log(authors.filter(authorFilter))
-  for await (const {id, name} of authors.slice(0, 7)) {
-    console.log(name);
+  for await (const {id, name} of authors) {
+    console.log(`Retreiving directory list: ${name}`);
     let cmd = spawn('gdrive', gdriveListCmd(id));
     for await (const chunk of cmd.stdout) {
       const foldersFromResponse = getFoldersFromResponse(chunk);
