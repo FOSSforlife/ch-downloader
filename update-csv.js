@@ -19,7 +19,7 @@ const folderFilter = ({id, name}) => {
 
 const getFoldersFromResponse = (chunk) => chunk.toString().split('\n').map(line => ({id: line.split('   ')[0], name: line.split('   ')[1]})).filter(folderFilter);
 
-const sortByFolderName = (folderA, folderB) => folderA.name.toUpperCase() > folderB.name.toUpperCase();
+const sortByFolderName = (folderA, folderB) => folderA.name.toUpperCase() > folderB.name.toUpperCase() ? 1 : -1;
 
 (async () => {
   const artists = fs.readFileSync('artists.txt').toString().split('\n').map(a => a.toUpperCase());
@@ -35,13 +35,12 @@ const sortByFolderName = (folderA, folderB) => folderA.name.toUpperCase() > fold
 
   // Get folders
   // console.log(authors.filter(authorFilter))
-  for await (const {id, name} of authors) {
+  for await (const {id, name} of authors.slice(0, 7)) {
     console.log(name);
     let cmd = spawn('gdrive', gdriveListCmd(id));
     for await (const chunk of cmd.stdout) {
       const foldersFromResponse = getFoldersFromResponse(chunk);
       const foldersToAdd = foldersFromResponse.filter(({name}) => artists.includes(name.toUpperCase())).map(f => ({...f, author: name}));
-      console.log(foldersToAdd);
       folders.push(...foldersToAdd);
     }
     await sleep(GDRIVE_API_TIMEOUT);
