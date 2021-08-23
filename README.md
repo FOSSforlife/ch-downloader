@@ -1,4 +1,4 @@
-Downloads Clone Hero drum charts from my favorite artists.
+Downloads Clone Hero drum charts from your favorite artists.
 
 # Usage
 
